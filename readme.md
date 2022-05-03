@@ -1,3 +1,3 @@
-DJANGO SETUP:
+<h1> DJANGO SETUP: </h1>
 python -m django --version
-python manage.py runserver
+<br> python manage.py runserver
