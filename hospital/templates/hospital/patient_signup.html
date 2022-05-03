@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+{% load widget_tweaks %}
 <head>
     {% include "hospital/head.html" %}
     {% include "hospital/login_sign_head.html" %}
@@ -26,33 +27,33 @@
              <div class="row">
                <div class="col-md-6">
                  <div class="form-group">
-                   {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
+                   {% render_field UserRegForm.first_name class="form-control" placeholder="First Name" %}
                  </div>
                  <div class="form-group">
-                   {% render_field userForm.username class="form-control" placeholder="Username" %}
+                   {% render_field UserRegForm.username class="form-control" placeholder="Username" %}
                  </div>
                  <div class="form-group">
-                   {% render_field patientForm.address class="form-control" placeholder="Address" %}
+                   {% render_field PatientRegForm.address class="form-control" placeholder="Address" %}
                  </div>
                  <div class="form-group">
-                   {% render_field patientForm.symptoms class="form-control" placeholder="Symptoms" %}
+                   {% render_field PatientRegForm.description class="form-control" placeholder="Symptoms" %}
                  </div>
                  <div class="form-group">
-                   {% render_field patientForm.profile_pic required="required" class="form-control" placeholder="Profile Picture" %}
+                   {% render_field PatientRegForm.image required="required" class="form-control" placeholder="Profile Picture" %}
                  </div>
                </div>
                <div class="col-md-6">
                  <div class="form-group">
-                   {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
+                   {% render_field UserRegForm.last_name class="form-control" placeholder="Last Name" %}
                  </div>
                  <div class="form-group">
-                   {% render_field userForm.password class="form-control" placeholder="Password" %}
+                   {% render_field UserRegForm.password class="form-control" placeholder="Password" %}
                  </div>
                  <div class="form-group">
-                   {% render_field patientForm.mobile class="form-control" pattern="[6789][0-9]{9}" placeholder="Contact Number" %}
+                   {% render_field PatientRegForm.mobile class="form-control" pattern="[6789][0-9]{9}" placeholder="Contact Number" %}
                  </div>
                  <div class="form-group">
-                   {% render_field patientForm.assignedDoctorId class="form-control" placeholder="Doctor" %}
+                   {% render_field PatientRegForm.assignedDoctorId class="form-control" placeholder="Doctor" %}
                  </div>
    
                </div>
