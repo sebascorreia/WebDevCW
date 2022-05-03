@@ -26,4 +26,4 @@ class UserRegForm(UserCreationForm):
 class PatientRegForm(ModelForm):
     class Meta:
         model = Patient
-        fields = ('address','phone', 'description', 'image', 'assignedDoctorId', 'admitDate','admitStatus')
+        fields = ('phone','address')

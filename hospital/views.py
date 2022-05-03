@@ -10,7 +10,7 @@ def index(request):
 
 def patient_registration(request):
     if request.method == "POST":
-        form =UserRegForm(request.POST)
+        form = UserRegForm(request.POST)
         patient_form = PatientRegForm(request.POST)
         if form.is_valid() and patient_form.is_valid():
             user = form.save()
@@ -20,7 +20,7 @@ def patient_registration(request):
             patient.save()
             login(request,user)
             messages.success(request, "Registration successful.")
-            return redirect("hospital:index")
+            return redirect("hospital")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     else:
         form = UserRegForm()
