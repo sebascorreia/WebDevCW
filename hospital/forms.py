@@ -27,3 +27,4 @@ class PatientRegForm(ModelForm):
     class Meta:
         model = Patient
         fields = ('phone','address')
+

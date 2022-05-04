@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.views import View
 from .forms import UserRegForm, PatientRegForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 
 def index(request):
@@ -20,10 +21,28 @@ def patient_registration(request):
             patient.save()
             login(request,user)
             messages.success(request, "Registration successful.")
-            return redirect("hospital")
+            return redirect("hospital:index")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     else:
         form = UserRegForm()
         patient_form = PatientRegForm()
     context = {'form': form, 'patient_form' : patient_form }
     return render (request= request, template_name="hospital/patient_signup.html", context= context)
+
+def login_request(request):
+    if request.method =="POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username= form.cleaned_data.get('username')
+            password= form.cleaned_data.get('password')
+            user=authenticate(username=username, password= password)
+            if user is not None:
+                login(request,user)
+                messages.info(request, f"You are now logged in as {user.first_name}.")
+                return redirect("hospital:index")
+            else:
+                messages.error(request, "Invalid email or password.")
+        else:
+            messages.error(request, "Invalid email or password.")
+    form = AuthenticationForm()
+    return render(request = request, template_name="hospital/login.html",context = {"login_form":form})
