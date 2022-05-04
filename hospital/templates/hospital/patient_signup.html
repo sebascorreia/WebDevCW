@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+{% load crispy_forms_tags %}
 <head>
     {% include "hospital/head.html" %}
     {% include "hospital/login_sign_head.html" %}
@@ -10,60 +11,18 @@
 <body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
     {% include "hospital/header.html"%}
      <br>
-     <br>
-     <br>
-     <br>
-     <!--- signup page for patient by admin(sumit)  ---------->
-     <form method="post" enctype="multipart/form-data">
-       {% csrf_token %}
-       <div class="container register-form">
-         <div class="form">
-           <div class="note">
-             <p>Register to Hospital</p>
-           </div>
-   
-           <div class="form-content">
-             <div class="row">
-               <div class="col-md-6">
-                 <div class="form-group">
-                   {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
-                 </div>
-                 <div class="form-group">
-                   {% render_field userForm.username class="form-control" placeholder="Username" %}
-                 </div>
-                 <div class="form-group">
-                   {% render_field patientForm.address class="form-control" placeholder="Address" %}
-                 </div>
-                 <div class="form-group">
-                   {% render_field patientForm.symptoms class="form-control" placeholder="Symptoms" %}
-                 </div>
-                 <div class="form-group">
-                   {% render_field patientForm.profile_pic required="required" class="form-control" placeholder="Profile Picture" %}
-                 </div>
-               </div>
-               <div class="col-md-6">
-                 <div class="form-group">
-                   {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
-                 </div>
-                 <div class="form-group">
-                   {% render_field userForm.password class="form-control" placeholder="Password" %}
-                 </div>
-                 <div class="form-group">
-                   {% render_field patientForm.mobile class="form-control" pattern="[6789][0-9]{9}" placeholder="Contact Number" %}
-                 </div>
-                 <div class="form-group">
-                   {% render_field patientForm.assignedDoctorId class="form-control" placeholder="Doctor" %}
-                 </div>
-   
-               </div>
-             </div>
-             <button type="submit" class="btnSubmit">Register</button>
-             <div class="text-center">Already have an account? <a href="patient_login.html">Login here</a></div>
-           </div>
-         </div>
-       </div>
-   
-     </form>
+
+    <div class="container py-5">
+        <h1>Register</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            {{ patient_form|crispy}}
+            <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+
+    </div>
+
    
   {% include "hospital/footer.html" %}
 
