@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "hospital/head.html" %}
+    {% include "hospital/login_sign_head.html" %}
+</head>
+
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+    {% include "hospital/header.html" %}
+    {% load crispy_forms_tags %}
+  <!--- login page for patient by admin(sumit)  ---------->
+  <form method="post">
+     {% csrf_token %}
+     <div class="container register-form">
+       <div class="form">
+         <div class="note">
+           <h1>Login Page</h1>
+
+         </div>
+        {{ login_form|crispy }}
+
+       </div>
+           <button type="submit" class="btnSubmit">Login</button>
+           <div class="text-center">Do not have account? <a href="/hospital/register">Signup here</a></div>
+         </div>
+   </form>
+
+
+  {% include "hospital/footer.html" %}
+</body>
+
+</html>

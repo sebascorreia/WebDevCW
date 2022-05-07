@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+<html lang="en">
+{% load crispy_forms_tags %}
+<head>
+    {% include "hospital/head.html" %}
+    {% include "hospital/login_sign_head.html" %}
+</head>
+
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+    {% include "hospital/header.html"%}
+     <br>
+
+    <div class="container py-5">
+        <h1>Register</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            {{ patient_form|crispy}}
+            <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+
+    </div>
+
+   
+  {% include "hospital/footer.html" %}
+
+</body>
+</html>
