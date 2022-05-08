@@ -1,0 +1,45 @@
+{% load static %}
+
+<html lang="en">
+<head>
+
+     {% include "hospital/head.html" %}
+
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+    {% include "hospital/header.html" %}
+
+<div class="card">
+            <div class="card-header">
+                {{ appointment.subject }}
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                   <strong>Description:</strong> {{ appointment.description }}
+                <br/>
+                <strong>Patient:</strong> {{ appointment.patientId }}
+                <br/>
+                  <strong>Doctor:</strong> {{ appointment.doctorId }}
+                <br/>
+                  <strong>Department:</strong> {{ appointment.department }}
+                <br/>
+                  <strong>Date:</strong>
+                  {% if appointment.appointmentDate == None %} <p>No date set</p>
+                  {% else %} <p>{{ appointment.appointmentDate }}</p>
+                    {%endif%}
+                  <br/>
+                  <strong>Date created:</strong> {{ appointment.date_created }}
+
+                <br/>
+              </p>
+                <a class="btn btn-primary" href="{% url 'hospital:appointment_edit' appointment.id %}">Edit</a>
+            </div>
+</div>
+
+
+
+    {% include "hospital/footer.html" %}
+</body>
+
+</html>

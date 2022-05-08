@@ -1,0 +1,26 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+
+     {% include "hospital/head.html" %}
+
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+    {% include "hospital/header.html" %}
+
+    <div class="container py-5">
+    <h1>Edit Appointment</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary" type="submit">Edit</button>
+    </form>
+    </div>
+
+
+    {% include "hospital/footer_patients.html" %}
+</body>
+
+</html>
