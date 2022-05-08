@@ -9,5 +9,9 @@ urlpatterns = [
     path('patients/', views.all_patients, name='patients'),
     path('doctordashboard/', views.doctor_dashboard, name='doctordashboard'),
     path('patientdashboard/', views.patient_dashboard, name='patientdashboard'),
-    path('request_appointment',views.appointment_view,name = 'request_appointment'),
+    path('request_appointment/', views.appointment_view,name = 'request_appointment'),
+    path('allappointments/', views.allappointments, name='appointment_list'),
+    path('myappointments/', views.myappointments, name='myappointments'),
+    path('unassigned_appointments', views.unassigned_appointments, name='unassigned_appointments')
+
 ]

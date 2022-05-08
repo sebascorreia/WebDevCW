@@ -49,11 +49,12 @@ class Patient(models.Model):
 class Appointment(models.Model):
     patientId = models.ForeignKey(Patient, on_delete= models.CASCADE)
     doctorId = models.ForeignKey(Doctor, on_delete= models.CASCADE)
-    appointmentDate = models.DateField(auto_now=True)
+    appointmentDate = models.DateField(null = True)
     description = models.TextField(max_length=1000)
     status = models.BooleanField(default=False)
     subject = models.TextField(max_length=50, null = False)
     department = models.CharField(max_length=50, choices=departments, null=True)
+    date_created = models.DateField(auto_now=True)
 class Bill(models.Model):
     patientId = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctorId = models.ForeignKey(Doctor, on_delete=models.CASCADE)

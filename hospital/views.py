@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from django.views import View
+from django.views import View, generic
 from .forms import UserRegForm, PatientRegForm, AppointmentForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Patient, Doctor, Appointment
+
 
 def index(request):
     return render(request, 'hospital/index.html')
@@ -14,13 +15,54 @@ def index(request):
 def doctor_dashboard(request):
     return render(request, 'hospital/doctor_dashboard.html')
 
+
 def patient_dashboard(request):
     return render(request, 'hospital/patient_dashboard.html')
 
+
 def all_patients(request):
-    patient_list = Patient.objects.all()
-    return render(request, 'hospital/patient_list.html',
-        {'patient_list': patient_list})
+    current_user = request.user
+    if Doctor.objects.filter(user=current_user).exists():
+        patient_list = Patient.objects.all()
+        return render(request, 'hospital/patient_list.html',
+            {'patient_list': patient_list})
+    else:
+        messages.info("ACCESS DENIED")
+        return redirect("hospital:login")
+
+
+def allappointments(request):
+    current_user = request.user
+    if Doctor.objects.filter(user=current_user).exists():
+        appointment_list = Appointment.objects.all()
+        return render(request, 'hospital/appointment_list.html',
+                      {'appointment_list': appointment_list})
+    else:
+        messages.info("ACCESS DENIED")
+        return redirect("hospital:login")
+
+def unassigned_appointments(request):
+    current_user = request.user
+    if Doctor.objects.filter(user= current_user).exists():
+        appointment_list = Appointment.objects.filter(doctorId__isnull =True)
+        return render(request, 'hospital/appointment_list.html',
+                      {'appointment_list': appointment_list})
+    else:
+        messages.info("ACCESS DENIED")
+        return redirect("hospital:login")
+def myappointments(request):
+    current_user = request.user
+    if Patient.objects.filter(user = current_user).exists():
+        patient = Patient.objects.get(user = current_user)
+        appointment_list = Appointment.objects.filter(patientId = patient)
+    elif Doctor.objects.filter(user= current_user).exists():
+        doctor = Doctor.objects.get(user = current_user)
+        appointment_list = Appointment.objects.filter(doctorId=doctor)
+    else:
+        messages.info("Please login or signup")
+        return redirect("hospital:login")
+    return render(request, 'hospital/appointment_list.html',
+                  {'appointment_list': appointment_list})
 
 
 def patient_registration(request):
