@@ -19,7 +19,10 @@ def doctor_dashboard(request):
 def patient_dashboard(request):
     return render(request, 'hospital/patient_dashboard.html')
 
-
+def patappointment_click(request):
+    return render(request, 'hospital/patappointments_click.html')
+def docappointment_click(request):
+    return render(request, 'hospital/docappointements_click.html')
 def all_patients(request):
     current_user = request.user
     if Doctor.objects.filter(user=current_user).exists():
