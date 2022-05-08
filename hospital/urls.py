@@ -15,4 +15,6 @@ urlpatterns = [
     path('unassigned_appointments', views.unassigned_appointments, name='unassigned_appointments'),
     path('appointment_detail/<int:appointment_id>', views.appointmentdetail, name='appointment_detail'),
     path('appointment_edit/<int:pk>', views.AppointmentUpdate.as_view(), name='appointment_edit'),
+    path('appointments_pat', views.patappointment_click, name='patappointments' ),
+    path('appointments_doc', views.docappointment_click, name='docappointments' ),
 ]

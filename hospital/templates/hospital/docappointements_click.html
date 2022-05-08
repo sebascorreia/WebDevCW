@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% include "hospital/head.html" %}
+
+</head>
+
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+    {% include "hospital/header.html" %}
+
+<br>
+<br>
+
+<div class="jumbotron" style="margin-bottom:0px;">
+  <h1 class="display-4" style="text-align:center;">Hello, Patient</h1>
+  <p class="lead">Welcome to Hospital Management System.</p>
+  <hr class="my-4">
+
+  <p class="lead">
+        <a class="btn btn-danger btn-lg" href="{% url 'hospital:myappointments' %}" role="button">My Appointments</a>
+        <a class="btn btn-success btn-lg" href="{% url 'hospital:unassigned_appointments' %}" role="button">Unassigned Appointments</a>
+        <a class="btn btn-success btn-lg" href="{% url 'hospital:appointment_list' %}" role="button">All Appointments</a>
+
+  </p>
+</div>
+{% include "hospital/footer.html" %}
+</body>
+</html>
