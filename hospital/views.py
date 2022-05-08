@@ -5,9 +5,23 @@ from django.views import View
 from .forms import UserRegForm, PatientRegForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from .models import Patient
 
 def index(request):
     return render(request, 'hospital/index.html')
+
+
+def doctor_dashboard(request):
+    return render(request, 'hospital/doctor_dashboard.html')
+
+def patient_dashboard(request):
+    return render(request, 'hospital/patient_dashboard.html')
+
+def all_patients(request):
+    patient_list = Patient.objects.all()
+    return render(request, 'hospital/patient_list.html',
+        {'patient_list': patient_list})
+
 
 def patient_registration(request):
     if request.method == "POST":
