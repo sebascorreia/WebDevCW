@@ -11,6 +11,9 @@ def index(request):
     return render(request, 'hospital/index.html')
 
 
+def doctor_dashboard(request):
+    return render(request, 'hospital/doctor_dashboard.html')
+
 def all_patients(request):
     patient_list = Patient.objects.all()
     return render(request, 'hospital/patient_list.html',
