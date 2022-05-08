@@ -18,13 +18,13 @@
 
         <div class="card">
             <div class="card-header">
-                {{ appointment }}
+               <a href="{% url 'hospital:appointment_detail' appointment.id %}"> {{ appointment.subject }}</a>
             </div>
             <div class="card-body">
               <p class="card-text">
-                <strong>Subject:</strong> {{ appointment.subject }}
+                <strong>Subject:</strong> {{ appointment.patientId }}
                 <br/>
-                <strong>Patient:</strong> {{ appointment.patientId }}
+                <strong>Patient:</strong> {{ appointment.department }}
                 <br/>
               </p>
             </div>

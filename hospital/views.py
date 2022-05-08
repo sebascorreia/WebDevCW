@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.views import View, generic
@@ -6,7 +6,7 @@ from .forms import UserRegForm, PatientRegForm, AppointmentForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Patient, Doctor, Appointment
-
+from django.forms import ModelForm
 
 def index(request):
     return render(request, 'hospital/index.html')
@@ -30,6 +30,9 @@ def all_patients(request):
         messages.info("ACCESS DENIED")
         return redirect("hospital:login")
 
+def appointmentdetail(request, appointment_id):
+    appointment = get_object_or_404(Appointment, pk=appointment_id)
+    return render(request, 'hospital/appointment_detail.html', {'appointment': appointment})
 
 def allappointments(request):
     current_user = request.user
@@ -63,6 +66,11 @@ def myappointments(request):
         return redirect("hospital:login")
     return render(request, 'hospital/appointment_list.html',
                   {'appointment_list': appointment_list})
+
+class AppointmentUpdate(generic.UpdateView):
+    model = Appointment
+    template_name= 'hospital/appointment_edit.html'
+    fields=['doctorId', 'appointmentDate', 'department','status','description',]
 
 
 def patient_registration(request):
