@@ -1,12 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
-
+departments=[('Cardiologist','Cardiologist'),
+('Dermatologists','Dermatologists'),
+('Emergency Medicine Specialists','Emergency Medicine Specialists'),
+('Allergists/Immunologists','Allergists/Immunologists'),
+('Anesthesiologists','Anesthesiologists'),
+('Colon and Rectal Surgeons','Colon and Rectal Surgeons'),
+('Other','Other')
+]
 class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=40, null = True)
     phone = PhoneNumberField(null =True, blank = False, unique = True, default='1234567890')
-    department = models.CharField(max_length=20, null = False)
+    department = models.CharField(max_length=50, null = False, choices = departments,default='Cardiologist')
     image = models.ImageField(upload_to='hospital/static/hospital/profile_pics', null = True)
 
     @property
@@ -22,7 +29,7 @@ class Doctor(models.Model):
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=40,null=True)
-    phone = PhoneNumberField(null=True, blank=False, unique=False, default='1234567890')
+    phone = PhoneNumberField(null=True)
     image = models.ImageField(upload_to='hospital/static/hospital/profile_pics',null= True)
     description = models.CharField(max_length=500,null=True)
     assignedDoctorId = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True)
@@ -43,9 +50,10 @@ class Appointment(models.Model):
     patientId = models.ForeignKey(Patient, on_delete= models.CASCADE)
     doctorId = models.ForeignKey(Doctor, on_delete= models.CASCADE)
     appointmentDate = models.DateField(auto_now=True)
-    description = models.TextField(max_length=500)
+    description = models.TextField(max_length=1000)
     status = models.BooleanField(default=False)
-
+    subject = models.TextField(max_length=50, null = False)
+    department = models.CharField(max_length=50, choices=departments, null=True)
 class Bill(models.Model):
     patientId = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctorId = models.ForeignKey(Doctor, on_delete=models.CASCADE)
