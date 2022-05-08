@@ -70,8 +70,24 @@ def myappointments(request):
 class AppointmentUpdate(generic.UpdateView):
     model = Appointment
     template_name= 'hospital/appointment_edit.html'
-    fields=['doctorId', 'appointmentDate', 'department','status','description',]
+    def get_form_class(self):
+        if Doctor.objects.filter(user=self.request.user).exists():
+            return AppointmentUpdate_doc
+        elif Patient.objects.filter(user=self.request.user).exists():
+            return AppointmentUpdate_pat
 
+
+class AppointmentUpdate_doc(ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ['doctorId', 'appointmentDate', 'department','status']
+
+
+
+class AppointmentUpdate_pat(ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ['description', 'department']
 
 def patient_registration(request):
     if request.method == "POST":
