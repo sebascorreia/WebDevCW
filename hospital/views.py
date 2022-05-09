@@ -40,8 +40,7 @@ def all_patients(request):
         if Doctor.objects.filter(user=current_user).exists():
             doctor = Doctor.objects.filter(user=current_user)
         patient_list = Patient.objects.all()
-        return render(request, 'hospital/patient_list.html',
-            {'patient_list': patient_list})
+        return render(request, 'hospital/patient_list.html', {'doctor': doctor, 'patient_list': patient_list})
     else:
         messages.info("ACCESS DENIED")
         return redirect("hospital:login")

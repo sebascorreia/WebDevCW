@@ -33,11 +33,15 @@
           </div>
         {% endfor %}
     </div> 
-    {% endif%}
-    {% endif%}
+    {% else%}
+    
       <h1>You don't have access to this page, make sure to log in as Doctor</h1>     
 
-    
+    {% endif%}
+
+    {% else%}
+      <h1>You don't have access to this page, make sure to log in as Doctor</h1> 
+    {% endif%}
 
     {% include "hospital/footer_patients.html" %}
 </body>
