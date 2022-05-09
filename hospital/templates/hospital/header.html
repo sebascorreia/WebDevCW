@@ -57,10 +57,10 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dashboard</a>
                         <ul class="dropdown-menu">
                             
-                            <li>Hi {{ user.department }}!</li>
-                            
+                            <li>Hi {{ user.username }}!</li>
+                        {% if doctor %}
                             <li><a href="{% url 'hospital:doctordashboard' %}">Doctor</a></li>
-                            
+                        {% endif %}
                             <li><a href="{% url 'hospital:patientdashboard' %}">Patient</a></li>
                             <li><a href="{% url 'hospital:logout' %}">Log Out</a></li>
                         </ul>

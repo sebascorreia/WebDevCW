@@ -11,8 +11,11 @@ from django.http import HttpResponse
 
 def index(request):     
     current_user = request.user
-    doctor = Doctor.objects.filter(user=current_user).exists()
-    return render(request, 'hospital/index.html')
+    doctor = ''
+    if request.user.is_authenticated:
+        if Doctor.objects.filter(user=current_user).exists():
+            doctor = Doctor.objects.filter(user=current_user)
+    return render(request, 'hospital/index.html', {'doctor': doctor})
 
 
 def doctor_dashboard(request):
@@ -20,7 +23,7 @@ def doctor_dashboard(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('hospital/index.html')
+    return render(request, 'hospital/index.html')
 
 def patient_dashboard(request):
     return render(request, 'hospital/patient_dashboard.html')
@@ -30,19 +33,12 @@ def patappointment_click(request):
 def docappointment_click(request):
     return render(request, 'hospital/docappointements_click.html')
 
-def is_doctor(request):
-    current_user = request.user
-    if Doctor.objects.filter(user=current_user).exists():
-        print("is doctor")
-        return True
-    else:
-        messages.info("not doctor")
-        print("is not doctor")
-        return False
-
 def all_patients(request):
     current_user = request.user
-    if current_user.is_authenticated():
+    doctor = ''
+    if request.user.is_authenticated:
+        if Doctor.objects.filter(user=current_user).exists():
+            doctor = Doctor.objects.filter(user=current_user)
         patient_list = Patient.objects.all()
         return render(request, 'hospital/patient_list.html',
             {'patient_list': patient_list})
