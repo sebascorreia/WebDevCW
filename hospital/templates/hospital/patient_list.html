@@ -10,6 +10,7 @@
 
     {% include "hospital/header.html" %}
 
+    {% if user.is_authenticated %}
     <div class="container">
 
         <h1>Patients</h1>
@@ -32,6 +33,10 @@
         {% endfor %}
     </div> 
 
+    {% else %}
+      <h1>You don't have access to this page, make sure to log in</h1>     
+
+    {% endif%}
 
     {% include "hospital/footer_patients.html" %}
 </body>

@@ -1,20 +1,26 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views import View, generic
 from .forms import UserRegForm, PatientRegForm, AppointmentForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Patient, Doctor, Appointment
 from django.forms import ModelForm
+from django.http import HttpResponse
 
-def index(request):
+def index(request):     
+    current_user = request.user
+    doctor = Doctor.objects.filter(user=current_user).exists()
     return render(request, 'hospital/index.html')
 
 
 def doctor_dashboard(request):
     return render(request, 'hospital/doctor_dashboard.html')
 
+def logout_view(request):
+    logout(request)
+    return redirect('hospital/index.html')
 
 def patient_dashboard(request):
     return render(request, 'hospital/patient_dashboard.html')
@@ -23,9 +29,20 @@ def patappointment_click(request):
     return render(request, 'hospital/patappointments_click.html')
 def docappointment_click(request):
     return render(request, 'hospital/docappointements_click.html')
-def all_patients(request):
+
+def is_doctor(request):
     current_user = request.user
     if Doctor.objects.filter(user=current_user).exists():
+        print("is doctor")
+        return True
+    else:
+        messages.info("not doctor")
+        print("is not doctor")
+        return False
+
+def all_patients(request):
+    current_user = request.user
+    if current_user.is_authenticated():
         patient_list = Patient.objects.all()
         return render(request, 'hospital/patient_list.html',
             {'patient_list': patient_list})
@@ -128,8 +145,11 @@ def login_request(request):
                     return redirect("hospital:doctordashboard")
             else:
                 messages.error(request, "Invalid email or password.")
+                #return HttpResponse(status=401)
         else:
             messages.error(request, "Invalid email or password.")
+            #return HttpResponse(status=401)
+            
     form = AuthenticationForm()
     return render(request = request, template_name="hospital/login.html",context = {"login_form":form})
 
