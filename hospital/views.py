@@ -22,8 +22,10 @@ def patient_dashboard(request):
 
 def patappointment_click(request):
     return render(request, 'hospital/patappointments_click.html')
+
 def docappointment_click(request):
     return render(request, 'hospital/docappointements_click.html')
+    
 def all_patients(request):
     current_user = request.user
     if Doctor.objects.filter(user=current_user).exists():
@@ -80,13 +82,10 @@ class AppointmentUpdate(generic.UpdateView):
         elif Patient.objects.filter(user=self.request.user).exists():
             return AppointmentUpdate_pat
 
-
 class AppointmentUpdate_doc(ModelForm):
     class Meta:
         model = Appointment
         fields = ['doctorId', 'appointmentDate', 'department','status']
-
-
 
 class AppointmentUpdate_pat(ModelForm):
     class Meta:
@@ -134,6 +133,7 @@ def login_request(request):
     form = AuthenticationForm()
     return render(request = request, template_name="hospital/login.html",context = {"login_form":form})
 
+
 def appointment_view(request):
     if request.method == "POST":
         form = AppointmentForm(request.POST)
@@ -146,7 +146,7 @@ def appointment_view(request):
                 if patientID.assignedDoctorId is not None:
                     appointment.doctorId = patientID.assignedDoctorId
                 appointment.save()
-                return redirect("hospital:patappointments_click")
+                return redirect("hospital:patientdashboard")
             else:
                 messages.info(request, 'invalid registration details')
                 return render(
@@ -155,7 +155,7 @@ def appointment_view(request):
                     {"form": form}  # This still includes the errors instead of creating a new form
                 )
         else:
-            messages.info("Please login or signup")
+            messages="error"
             return redirect("hospital:login")
     form = AppointmentForm()
     return render(request=request, template_name="hospital/appointment.html", context={"form": form})

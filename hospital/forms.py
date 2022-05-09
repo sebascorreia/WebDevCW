@@ -30,6 +30,7 @@ class PatientRegForm(ModelForm):
 
 
 class AppointmentForm(forms.ModelForm):
+    
     class Meta:
         model=Appointment
         fields=['subject','description', 'department' ]
