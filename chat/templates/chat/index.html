@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Chat</title>
+</head>
+<body>
+    <div class="container">
+        <h3>Enter chatroom</h3><br>
+        <input id="roomname" type="text" size="100"><br><br>
+        <input id="submit" type="button" value="Enter">
+    </div>
+
+    <script>
+        document.querySelector('#submit').onclick= function(e){
+            var myRoom = document.querySelector('#roomname').value;
+            window.location.pathname= '/chats/' + myRoom + '/';
+        };
+    </script>
+
+</body>
+</html>
