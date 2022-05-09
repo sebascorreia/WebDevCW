@@ -48,7 +48,7 @@ class Patient(models.Model):
 
 class Appointment(models.Model):
     patientId = models.ForeignKey(Patient, on_delete= models.CASCADE)
-    doctorId = models.ForeignKey(Doctor, on_delete= models.CASCADE)
+    doctorId = models.ForeignKey(Doctor,null= True, on_delete= models.CASCADE)
     appointmentDate = models.DateField(null = True)
     description = models.TextField(max_length=1000)
     status = models.BooleanField(default=False)
