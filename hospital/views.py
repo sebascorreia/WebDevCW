@@ -1,6 +1,7 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views import View, generic
 from .forms import UserRegForm, PatientRegForm, AppointmentForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -145,7 +146,7 @@ def appointment_view(request):
                 if patientID.assignedDoctorId is not None:
                     appointment.doctorId = patientID.assignedDoctorId
                 appointment.save()
-                return redirect("hospital:index")
+                return redirect("hospital:patappointments_click")
             else:
                 messages.info(request, 'invalid registration details')
                 return render(
@@ -158,4 +159,10 @@ def appointment_view(request):
             return redirect("hospital:login")
     form = AppointmentForm()
     return render(request=request, template_name="hospital/appointment.html", context={"form": form})
+
+    #Logout
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('hospital/login.html')
+
 
