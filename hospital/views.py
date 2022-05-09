@@ -11,8 +11,11 @@ from django.http import HttpResponse
 
 def index(request):     
     current_user = request.user
-    doctor = Doctor.objects.filter(user=current_user).exists()
-    return render(request, 'hospital/index.html')
+    doctor = ''
+    if request.user.is_authenticated:
+        if Doctor.objects.filter(user=current_user).exists():
+            doctor = Doctor.objects.filter(user=current_user)
+    return render(request, 'hospital/index.html', {'doctor': doctor})
 
 
 def doctor_dashboard(request):
