@@ -28,11 +28,11 @@ class TestUrls(SimpleTestCase):
         print(resolve(url))
         self.assertEquals(resolve(url).func, login_request)
 
-    # def test_patients_url_is_resolved(self):
-    #     url = reverse('hospital:patients')
-    #     client = Client()    
-    #     print(resolve(url))
-    #     self.assertEquals(resolve(url).func, login_request)
+    def test_patients_url_is_resolved(self):
+        url = reverse('hospital:patients')
+        client = Client()    
+        print(resolve(url))
+        self.assertEquals(resolve(url).func, all_patients)
 
 
     def test_doctordashboard_url_is_resolved(self):
