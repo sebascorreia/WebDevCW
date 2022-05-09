@@ -50,13 +50,33 @@
                 <li><a href="#team" class="smoothScroll">Doctors</a></li>
                 <li><a href="#news" class="smoothScroll">News</a></li>
                 <li><a href="#google-map" class="smoothScroll">Contact</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{% url 'hospital:login' %}">Doctor</a></li>
-                        <li><a href="{% url 'hospital:register' %}">Patient</a></li>
-                    </ul>
-                </li>
+
+                {% block content %}
+                {% if user.is_authenticated %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dashboard</a>
+                        <ul class="dropdown-menu">
+                            
+                            <li>Hi {{ user.department }}!</li>
+                            
+                            <li><a href="{% url 'hospital:doctordashboard' %}">Doctor</a></li>
+                            
+                            <li><a href="{% url 'hospital:patientdashboard' %}">Patient</a></li>
+                            <li><a href="{% url 'hospital:logout' %}">Log Out</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'hospital:login' %}">Login</a></li>
+                            <li><a href="{% url 'hospital:register' %}">Register</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+                {% endblock %}
+
+
                 <li class="appointment-btn"><a href="#appointment">Make an appointment</a></li>
             </ul>
         </div>
